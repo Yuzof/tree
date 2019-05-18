@@ -1,5 +1,56 @@
-#include "tree.h"
+#ifndef TREE_H
+
+#define TREE_H
+
 #include <iostream>
+
+template <typename data_t>
+class tree {
+private:
+	class node {
+	public:
+		node* left;
+		node* right;
+		unsigned height;
+		data_t val;
+
+		node(data_t val);
+		~node();
+
+		node* insert(data_t val);
+		node* remove(data_t val);
+		bool exists(data_t val);
+		void printNode();
+
+		node* balance();
+		int bfactor();
+
+		node* rotateLeft();
+		node* rotateRight();
+		void fixHeight();
+
+		node* findMin();
+		node* removeMin();
+	};
+
+	node* root;
+
+public:
+	tree();
+	~tree();
+
+	//Вставка элемента в дерево (с последующими: пересчетом глубины и балансировкой)
+	void insert(data_t z);
+
+	//Наличие элемента дереве
+	bool exists(data_t z);
+
+	//Удаление элемента из дерева (с последующими: пересчетом глубины и балансировкой)
+	void remove(data_t z);
+
+	//Вывод дерева на экран
+	void dump();
+};
 
 template <typename data_t>
 tree<data_t>::tree() {
@@ -101,6 +152,8 @@ typename tree<data_t>::node* tree<data_t>::node::remove(data_t val) {
 
 template <typename data_t>
 typename tree<data_t>::node* tree<data_t>::node::balance() {
+    fixHeight();
+
     if (bfactor() == 2) {
         if (right->bfactor() < 0)
             right = right->rotateRight();
@@ -116,7 +169,17 @@ typename tree<data_t>::node* tree<data_t>::node::balance() {
 
 template <typename data_t>
 int tree<data_t>::node::bfactor() {
-    return right->height - left->height;
+    if (right != nullptr && left != nullptr) {
+        return right->height - left->height;
+    }
+
+    if (right != nullptr)
+        return right->height;
+
+    if (left != nullptr)
+        return left->height;
+
+    return 0;
 }
 
 template <typename data_t>
@@ -145,7 +208,22 @@ typename tree<data_t>::node* tree<data_t>::node::rotateLeft() {
 
 template <typename data_t>
 void tree<data_t>::node::fixHeight() {
-    height = (left->height > right->height) ? (left->height) : (right->height) + 1;
+    if (left != nullptr && right != nullptr) {
+        height = (left->height > right->height) ? (left->height) : (right->height) + 1;
+        return;
+    }
+
+    if (left != nullptr) {
+        height = left->height + 1;
+        return;
+    }
+
+    if (right != nullptr) {
+        height = right->height + 1;
+        return;
+    }
+
+    height = 0;
 }
 
 template <typename data_t>
@@ -189,3 +267,4 @@ void tree<data_t>::node::printNode() {
     }
     std::cout << std::endl;
 }
+#endif
