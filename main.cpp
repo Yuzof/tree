@@ -5,7 +5,7 @@
 
 int main()
 {
-	container<int> *t = new tree<int>();
+    container<int> *t = new tree<int>();
 
     int a, d;
     char com[20];
@@ -28,10 +28,7 @@ int main()
             printf("enter - insert a new element to the tree\n");
             printf("remove - remove an element\n");
             printf("dump - print the whole tree\n");
-            printf("fmin - find the min element\n");
-            printf("BalInf - balance theory\n");
-            printf("removemin - remove the least element");
-            printf("wq");
+            printf("wq\n");
             printf("\n");
 
             d = 1;
@@ -43,7 +40,7 @@ int main()
 
             scanf("%d", &a);
 
-           t->insert(a);
+            t->insert(a);
 
             d = 1;
         }
@@ -72,38 +69,11 @@ int main()
 
             std::cin >> a;
 
-            std::cout << t->exists(a) << std::endl;
+            if(t->exists(a))
+                std::cout << "Search for value " << a << ": found" << std::endl;
+            else
+                std::cout << "Search for value " << a << ": not found" << std::endl;
 
-            d = 1;
-        }
-
-
-        if (strcmp("BalInf", com) == 0)
-        {
-            printf("Reference balance commands\n");
-            printf("RR - simple right rotation\n");
-            printf("RL - simple left rotation\n");
-            printf("HR - complicated right rotation\n");
-            printf("HL - complicated left rotation\n");
-            printf("Type a theory command\n");
-
-            scanf("%s", com);
-            if (strcmp("RR", com) == 0)
-            {
-
-            }
-            if (strcmp("RL", com) == 0)
-            {
-
-            }
-            if (strcmp("HR", com) == 0)
-            {
-
-            }
-            if (strcmp("HL", com) == 0)
-            {
-
-            }
             d = 1;
         }
 
